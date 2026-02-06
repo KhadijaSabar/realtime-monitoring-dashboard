@@ -1,0 +1,23 @@
+{
+  "backend": {
+    "url": "http://localhost:5000",
+    "register_endpoint": "/api/servers/register",
+    "metrics_endpoint": "/api/metrics"
+  },
+  "server": {
+    "name": "My Server",
+    "hostname": "auto",
+    "ip_address": "auto",
+    "os_type": "auto"
+  },
+  "collection": {
+    "interval_seconds": 5,
+    "retry_attempts": 3,
+    "retry_delay_seconds": 2
+  },
+  "logging": {
+    "enabled": true,
+    "level": "INFO",
+    "file": "collector.log"
+  }
+}

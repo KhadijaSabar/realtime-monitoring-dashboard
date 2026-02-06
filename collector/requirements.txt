@@ -1,0 +1,13 @@
+# Python dependencies for the metrics collector
+
+# System metrics collection
+psutil==5.9.8
+
+# HTTP requests to send metrics to backend
+requests==2.31.0
+
+# Scheduling for periodic execution
+schedule==1.2.0
+
+# Configuration file parsing
+pyyaml==6.0.1
