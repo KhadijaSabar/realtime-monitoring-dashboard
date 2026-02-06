@@ -36,8 +36,8 @@ const RealtimeChart = ({ data, title, dataKeys, colors }) => {
           </p>
           {payload.map((entry, index) => (
             <p key={index} className="tooltip-item" style={{ color: entry.color }}>
-              {entry.name}: {entry.value.toFixed(1)}%
-            </p>
+  {entry.name}: {Number(entry.value).toFixed(1)}%
+</p>
           ))}
         </div>
       );

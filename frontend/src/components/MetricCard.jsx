@@ -6,7 +6,7 @@ import './MetricCard.css';
 
 const MetricCard = ({ title, value, unit, max, icon, threshold = 80 }) => {
   // Calculer le pourcentage pour la barre de progression
-  const percentage = max ? (value / max) * 100 : value;
+ const percentage = max ? (Number(value) / Number(max)) * 100 : Number(value);
   
   // Déterminer le statut (normal, warning, danger) basé sur le seuil
   const getStatus = () => {
@@ -27,7 +27,7 @@ const MetricCard = ({ title, value, unit, max, icon, threshold = 80 }) => {
 
       {/* Valeur principale */}
       <div className="metric-value">
-        <span className="value-number">{value.toFixed(1)}</span>
+        <span className="value-number">{Number(value).toFixed(1)}</span>
         <span className="value-unit">{unit}</span>
       </div>
 
