@@ -1,15 +1,13 @@
-// Contrôleur Metric - Gère la logique métier des endpoints métriques
-// Ce fichier fait le lien entre les routes et le modèle
+
 
 const Metric = require('../models/Metric');
 const Server = require('../models/Server');
 const { validationResult } = require('express-validator');
 
-// Créer une nouvelle métrique
-// Endpoint principal appelé par le script Python toutes les 5 secondes
+
 const createMetric = async (req, res) => {
   try {
-    // Valider les données d'entrée
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -20,7 +18,7 @@ const createMetric = async (req, res) => {
     
     const metricData = req.body;
     
-    // Vérifier que le serveur existe
+  
     const server = await Server.findById(metricData.server_id);
     if (!server) {
       return res.status(404).json({
@@ -28,11 +26,10 @@ const createMetric = async (req, res) => {
         error: 'Server not found',
       });
     }
-    
-    // Créer la métrique
+ 
     const metric = await Metric.create(metricData);
     
-    // Mettre à jour last_seen du serveur
+    
     await Server.updateLastSeen(metricData.server_id);
     
     // Émettre l'événement WebSocket pour mise à jour temps réel
@@ -57,8 +54,7 @@ const createMetric = async (req, res) => {
   }
 };
 
-// Récupérer la dernière métrique d'un serveur
-// Utilisé pour afficher les valeurs actuelles sur le dashboard
+
 const getCurrentMetric = async (req, res) => {
   try {
     const { serverId } = req.params;
@@ -94,8 +90,7 @@ const getCurrentMetric = async (req, res) => {
   }
 };
 
-// Récupérer l'historique des métriques
-// Utilisé pour afficher les graphiques historiques
+
 const getMetricHistory = async (req, res) => {
   try {
     const { serverId } = req.params;
@@ -112,7 +107,7 @@ const getMetricHistory = async (req, res) => {
     
     let metrics;
     
-    // Si 'hours' est spécifié, récupérer les X dernières heures
+    
     if (hours) {
       metrics = await Metric.findRecentByServerId(serverId, parseInt(hours));
     } else {
@@ -139,14 +134,13 @@ const getMetricHistory = async (req, res) => {
   }
 };
 
-// Récupérer les statistiques moyennes
-// Utile pour les résumés et les cartes de statistiques
+
 const getMetricStats = async (req, res) => {
   try {
     const { serverId } = req.params;
     const { hours } = req.query;
     
-    // Vérifier que le serveur existe
+ 
     const server = await Server.findById(serverId);
     if (!server) {
       return res.status(404).json({
@@ -173,8 +167,6 @@ const getMetricStats = async (req, res) => {
   }
 };
 
-// Supprimer les anciennes métriques
-// Endpoint de maintenance pour nettoyer la base de données
 const cleanOldMetrics = async (req, res) => {
   try {
     const { days } = req.query;
@@ -196,12 +188,12 @@ const cleanOldMetrics = async (req, res) => {
   }
 };
 
-// Récupérer le nombre de métriques pour un serveur
+
 const getMetricCount = async (req, res) => {
   try {
     const { serverId } = req.params;
     
-    // Vérifier que le serveur existe
+   
     const server = await Server.findById(serverId);
     if (!server) {
       return res.status(404).json({
