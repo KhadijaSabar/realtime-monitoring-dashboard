@@ -59,7 +59,7 @@ const getCurrentMetric = async (req, res) => {
   try {
     const { serverId } = req.params;
     
-    // Vérifier que le serveur existe
+   
     const server = await Server.findById(serverId);
     if (!server) {
       return res.status(404).json({
@@ -96,7 +96,7 @@ const getMetricHistory = async (req, res) => {
     const { serverId } = req.params;
     const { from, to, limit, hours } = req.query;
     
-    // Vérifier que le serveur existe
+    
     const server = await Server.findById(serverId);
     if (!server) {
       return res.status(404).json({
